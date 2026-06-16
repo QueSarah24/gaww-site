@@ -25,20 +25,12 @@ export default function Admin() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
       setLoading(false)
-      if (session) {
-        loadQueue()
-        loadStats()
-      }
+      if (session) { loadQueue(); loadStats() }
     })
-
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
-      if (session) {
-        loadQueue()
-        loadStats()
-      }
+      if (session) { loadQueue(); loadStats() }
     })
-
     return () => subscription.unsubscribe()
   }, [])
 
@@ -46,28 +38,15 @@ export default function Admin() {
     e.preventDefault()
     setLoginLoading(true)
     setLoginError(null)
-
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) {
-      setLoginError(error.message)
-      setLoginLoading(false)
-      return
-    }
-
-    const { data: mod } = await supabase
-      .from('moderators')
-      .select('*')
-      .eq('id', data.user.id)
-      .eq('is_active', true)
-      .maybeSingle()
-
+    if (error) { setLoginError(error.message); setLoginLoading(false); return }
+    const { data: mod } = await supabase.from('moderators').select('*').eq('id', data.user.id).eq('is_active', true).maybeSingle()
     if (!mod) {
       await supabase.auth.signOut()
       setLoginError('Your account does not have moderator access.')
       setLoginLoading(false)
       return
     }
-
     setLoginLoading(false)
   }
 
@@ -77,20 +56,12 @@ export default function Admin() {
   }
 
   async function loadQueue() {
-    const { data } = await supabase
-      .from('reports')
-      .select('*, report_photos(*)')
-      .eq('status', 'pending')
-      .order('created_at', { ascending: false })
+    const { data } = await supabase.from('reports').select('*, report_photos(*)').eq('status', 'pending').order('created_at', { ascending: false })
     setReports(data || [])
   }
 
   async function loadAllReports() {
-    const { data } = await supabase
-      .from('reports')
-      .select('*, report_photos(*)')
-      .order('created_at', { ascending: false })
-      .limit(100)
+    const { data } = await supabase.from('reports').select('*, report_photos(*)').order('created_at', { ascending: false }).limit(100)
     setAllReports(data || [])
   }
 
@@ -117,17 +88,9 @@ export default function Admin() {
   }
 
   async function exportCSV() {
-    const { data } = await supabase
-      .from('reports')
-      .select('id,created_at,animal_type,report_type,date_observed,city,county,status,description')
-      .order('created_at', { ascending: false })
-
+    const { data } = await supabase.from('reports').select('id,created_at,animal_type,report_type,date_observed,city,county,status,description').order('created_at', { ascending: false })
     const headers = ['ID', 'Submitted', 'Animal Type', 'Report Type', 'Date Observed', 'City', 'County', 'Status', 'Description']
-    const rows = (data || []).map(r => [
-      r.id, r.created_at, r.animal_type, r.report_type,
-      r.date_observed, r.city, r.county, r.status,
-      `"${(r.description || '').replace(/"/g, '""')}"`,
-    ])
+    const rows = (data || []).map(r => [r.id, r.created_at, r.animal_type, r.report_type, r.date_observed, r.city, r.county, r.status, `"${(r.description || '').replace(/"/g, '""')}"`])
     const csv = [headers, ...rows].map(r => r.join(',')).join('\n')
     const blob = new Blob([csv], { type: 'text/csv' })
     const url = URL.createObjectURL(blob)
@@ -143,6 +106,11 @@ export default function Admin() {
     if (tab === 'analytics') loadStats()
   }
 
+  function getPhotoUrl(filePath) {
+    const { data } = supabase.storage.from('report-photos').getPublicUrl(filePath)
+    return data.publicUrl
+  }
+
   const statusTag = (status) => {
     const styles = {
       pending: { background: '#ffcc00', color: '#000' },
@@ -151,10 +119,9 @@ export default function Admin() {
       archived: { background: 'var(--gray-light)', color: 'rgba(255,255,255,0.6)' },
     }
     return (
-      <span style={{
-        ...styles[status], padding: '3px 8px', fontSize: 11,
-        fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
-      }}>{status}</span>
+      <span style={{ ...styles[status], padding: '3px 8px', fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+        {status}
+      </span>
     )
   }
 
@@ -162,49 +129,28 @@ export default function Admin() {
 
   if (!session) return (
     <Layout>
-      <div style={{
-        minHeight: 'calc(100vh - 64px)', display: 'flex',
-        alignItems: 'center', justifyContent: 'center', background: 'var(--black)',
-      }}>
-        <div style={{
-          background: 'var(--black-soft)', border: '2px solid rgba(255,255,255,0.1)',
-          borderTop: '3px solid var(--lime)', padding: '48px 44px', width: '100%', maxWidth: 420,
-        }}>
+      <div style={{ minHeight: 'calc(100vh - 64px)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--black)' }}>
+        <div style={{ background: 'var(--black-soft)', border: '2px solid rgba(255,255,255,0.1)', borderTop: '3px solid var(--lime)', padding: '48px 44px', width: '100%', maxWidth: 420 }}>
           <div style={{ fontSize: 36, marginBottom: 12 }}>🔐</div>
-          <h1 style={{
-            fontFamily: 'var(--font-display)', fontSize: 36, fontWeight: 900,
-            textTransform: 'uppercase', color: 'var(--white)', marginBottom: 4,
-          }}>Moderator Login</h1>
-          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.45)', marginBottom: 32 }}>
-            Access the GAWW moderation dashboard. Authorized personnel only.
-          </p>
-
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 36, fontWeight: 900, textTransform: 'uppercase', color: 'var(--white)', marginBottom: 4 }}>Moderator Login</h1>
+          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.45)', marginBottom: 32 }}>Access the GAWW moderation dashboard. Authorized personnel only.</p>
           {loginError && (
-            <div style={{
-              background: 'rgba(255,51,51,0.1)', border: '2px solid #ff3333',
-              padding: '12px 16px', marginBottom: 20, color: '#ff9999', fontSize: 14,
-            }}>{loginError}</div>
+            <div style={{ background: 'rgba(255,51,51,0.1)', border: '2px solid #ff3333', padding: '12px 16px', marginBottom: 20, color: '#ff9999', fontSize: 14 }}>{loginError}</div>
           )}
-
           <form onSubmit={handleLogin}>
             <div style={{ marginBottom: 16 }}>
               <label className="form-label">Email</label>
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-                className="form-input" placeholder="moderator@gaww.org" required />
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="form-input" placeholder="moderator@gaww.org" required />
             </div>
             <div style={{ marginBottom: 24 }}>
               <label className="form-label">Password</label>
-              <input type="password" value={password} onChange={e => setPassword(e.target.value)}
-                className="form-input" placeholder="••••••••" required />
+              <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="form-input" placeholder="••••••••" required />
             </div>
-            <button type="submit" className="btn btn-primary"
-              style={{ width: '100%', justifyContent: 'center' }} disabled={loginLoading}>
+            <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={loginLoading}>
               {loginLoading ? 'Signing in…' : 'Sign in'}
             </button>
           </form>
-          <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: 16, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-            Authorized moderators only.
-          </p>
+          <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: 16, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Authorized moderators only.</p>
         </div>
       </div>
     </Layout>
@@ -215,14 +161,8 @@ export default function Admin() {
       <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr', minHeight: 'calc(100vh - 64px)' }}>
 
         {/* Sidebar */}
-        <nav style={{
-          background: 'var(--black)', borderRight: '2px solid rgba(255,255,255,0.06)',
-          padding: '24px 0', display: 'flex', flexDirection: 'column', gap: 2,
-        }}>
-          <div style={{ padding: '16px 20px 20px', fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 900, color: '#fff' }}>
-            🐾 GAWW Admin
-          </div>
-
+        <nav style={{ background: 'var(--black)', borderRight: '2px solid rgba(255,255,255,0.06)', padding: '24px 0', display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <div style={{ padding: '16px 20px 20px', fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 900, color: '#fff' }}>🐾 GAWW Admin</div>
           {[
             { id: 'queue', label: '📋 Review Queue', badge: stats.pending },
             { id: 'reports', label: '📁 All Reports' },
@@ -238,32 +178,17 @@ export default function Admin() {
               borderLeft: `3px solid ${activeTab === id ? 'var(--lime)' : 'transparent'}`,
             }}>
               {label}
-              {badge > 0 && (
-                <span style={{
-                  marginLeft: 'auto', background: 'var(--lime)', color: 'var(--black)',
-                  fontSize: 10, fontWeight: 800, padding: '2px 7px',
-                }}>{badge}</span>
-              )}
+              {badge > 0 && <span style={{ marginLeft: 'auto', background: 'var(--lime)', color: 'var(--black)', fontSize: 10, fontWeight: 800, padding: '2px 7px' }}>{badge}</span>}
             </button>
           ))}
-
           <div style={{ marginTop: 'auto', padding: 20 }}>
-            <button onClick={handleLogout} style={{
-              fontSize: 13, color: 'rgba(255,255,255,0.4)', background: 'none',
-              border: 'none', cursor: 'pointer', fontFamily: 'var(--font-display)',
-              fontWeight: 700, textTransform: 'uppercase',
-            }}>← Log out</button>
+            <button onClick={handleLogout} style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-display)', fontWeight: 700, textTransform: 'uppercase' }}>← Log out</button>
           </div>
         </nav>
 
         {/* Main */}
         <div style={{ background: 'var(--black-soft)', overflowY: 'auto' }}>
-
-          {/* Header */}
-          <div style={{
-            background: 'var(--black)', borderBottom: '2px solid rgba(255,255,255,0.06)',
-            padding: '18px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          }}>
+          <div style={{ background: 'var(--black)', borderBottom: '2px solid rgba(255,255,255,0.06)', padding: '18px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 900, textTransform: 'uppercase', color: 'var(--white)' }}>
               {activeTab === 'queue' && 'Moderation Queue'}
               {activeTab === 'reports' && 'All Reports'}
@@ -274,22 +199,17 @@ export default function Admin() {
 
           <div style={{ padding: 28 }}>
 
-            {/* QUEUE TAB */}
+            {/* QUEUE */}
             {activeTab === 'queue' && (
               <div>
                 <div style={{ background: 'var(--black)', border: '2px solid rgba(255,255,255,0.06)', marginBottom: 20, overflow: 'hidden' }}>
                   <table>
                     <thead>
-                      <tr>
-                        <th>ID</th><th>Submitted</th><th>City</th>
-                        <th>Animal</th><th>Type</th><th>Photos</th><th>Status</th><th>Actions</th>
-                      </tr>
+                      <tr><th>ID</th><th>Submitted</th><th>City</th><th>Animal</th><th>Type</th><th>Photos</th><th>Status</th><th>Actions</th></tr>
                     </thead>
                     <tbody>
                       {reports.length === 0 && (
-                        <tr><td colSpan={8} style={{ textAlign: 'center', padding: 32, color: 'rgba(255,255,255,0.35)' }}>
-                          No pending reports — queue is clear ✓
-                        </td></tr>
+                        <tr><td colSpan={8} style={{ textAlign: 'center', padding: 32, color: 'rgba(255,255,255,0.35)' }}>No pending reports — queue is clear ✓</td></tr>
                       )}
                       {reports.map(r => (
                         <tr key={r.id}>
@@ -311,17 +231,18 @@ export default function Admin() {
                   </table>
                 </div>
 
-                {/* Report detail */}
+                {/* Report detail panel */}
                 {selectedReport && (
                   <div style={{ background: 'var(--black)', border: '2px solid rgba(255,255,255,0.08)', borderTop: '3px solid var(--lime)', padding: 24 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
                       <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 900, textTransform: 'uppercase', color: 'var(--white)' }}>
                         Report #{selectedReport.id.slice(0, 8)}
                       </h3>
                       <button onClick={() => setSelectedReport(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20, color: 'rgba(255,255,255,0.4)' }}>✕</button>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 16 }}>
+                    {/* Details grid */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 20 }}>
                       <div>
                         <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--lime)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 10 }}>Details</p>
                         <table style={{ fontSize: 13 }}>
@@ -333,13 +254,12 @@ export default function Admin() {
                               ['City', selectedReport.city],
                               ['Address (private)', selectedReport.address || 'Not provided'],
                               ['Coordinates', selectedReport.latitude ? `${selectedReport.latitude}°N, ${selectedReport.longitude}°W` : 'Not provided'],
-                              ['Photos', selectedReport.report_photos?.length || 0],
                               ['Submitted', formatDate(selectedReport.created_at)],
                               ['Status', selectedReport.status],
                             ].map(([label, value]) => (
                               <tr key={label}>
-                                <td style={{ color: 'rgba(255,255,255,0.4)', padding: '4px 16px 4px 0' }}>{label}</td>
-                                <td style={{ color: label.includes('private') || label === 'Coordinates' ? 'var(--lime)' : 'rgba(255,255,255,0.8)', fontWeight: label.includes('private') ? 600 : 400 }}>{value}</td>
+                                <td style={{ color: 'rgba(255,255,255,0.4)', padding: '4px 16px 4px 0', whiteSpace: 'nowrap' }}>{label}</td>
+                                <td style={{ color: label.includes('private') || label === 'Coordinates' ? 'var(--lime)' : 'rgba(255,255,255,0.8)' }}>{value}</td>
                               </tr>
                             ))}
                           </tbody>
@@ -353,14 +273,34 @@ export default function Admin() {
                       </div>
                     </div>
 
-                    <div style={{ marginBottom: 16 }}>
-                      <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--lime)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 8 }}>Moderator Notes</p>
-                      <textarea
-                        value={modNote} onChange={e => setModNote(e.target.value)}
-                        className="form-textarea" style={{ minHeight: 80 }}
-                        placeholder="Add internal notes…" />
+                    {/* Photos */}
+                    <div style={{ marginBottom: 20 }}>
+                      <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--lime)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 10 }}>
+                        Photos ({(selectedReport.report_photos || []).length})
+                      </p>
+                      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                        {(selectedReport.report_photos || []).length === 0 && (
+                          <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: 13 }}>No photos submitted</p>
+                        )}
+                        {(selectedReport.report_photos || []).map(photo => (
+                          <img
+                            key={photo.id}
+                            src={getPhotoUrl(photo.file_path)}
+                            alt="Report photo"
+                            style={{ width: 150, height: 110, objectFit: 'cover', border: '2px solid rgba(255,255,255,0.1)', cursor: 'pointer' }}
+                            onClick={() => window.open(getPhotoUrl(photo.file_path), '_blank')}
+                          />
+                        ))}
+                      </div>
                     </div>
 
+                    {/* Moderator notes */}
+                    <div style={{ marginBottom: 20 }}>
+                      <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--lime)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 8 }}>Moderator Notes</p>
+                      <textarea value={modNote} onChange={e => setModNote(e.target.value)} className="form-textarea" style={{ minHeight: 80 }} placeholder="Add internal notes…" />
+                    </div>
+
+                    {/* Action buttons */}
                     <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                       <button className="btn btn-primary btn-sm" onClick={() => updateStatus(selectedReport.id, 'approved')}>✓ Approve</button>
                       <button className="btn btn-sm" style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)' }} onClick={() => updateStatus(selectedReport.id, 'archived')}>Archive</button>
@@ -372,7 +312,7 @@ export default function Admin() {
               </div>
             )}
 
-            {/* ALL REPORTS TAB */}
+            {/* ALL REPORTS */}
             {activeTab === 'reports' && (
               <div style={{ background: 'var(--black)', border: '2px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}>
                 <table>
@@ -392,7 +332,9 @@ export default function Admin() {
                         <td>{r.report_type}</td>
                         <td>{r.report_photos?.length || 0}</td>
                         <td>{statusTag(r.status)}</td>
-                        <td><button className="action-btn action-view" onClick={() => { setSelectedReport(r); setModNote(r.moderator_notes || ''); setActiveTab('queue') }}>View</button></td>
+                        <td>
+                          <button className="action-btn action-view" onClick={() => { setSelectedReport(r); setModNote(r.moderator_notes || ''); setActiveTab('queue') }}>View</button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -400,7 +342,7 @@ export default function Admin() {
               </div>
             )}
 
-            {/* ANALYTICS TAB */}
+            {/* ANALYTICS */}
             {activeTab === 'analytics' && (
               <div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 2, marginBottom: 24, background: 'rgba(255,255,255,0.04)' }}>
@@ -419,7 +361,7 @@ export default function Admin() {
               </div>
             )}
 
-            {/* EXPORT TAB */}
+            {/* EXPORT */}
             {activeTab === 'export' && (
               <div style={{ background: 'var(--black)', border: '2px solid rgba(255,255,255,0.06)', padding: 24 }}>
                 <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: 15, marginBottom: 20 }}>
