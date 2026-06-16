@@ -13,14 +13,13 @@ function formatDate(str) {
 }
 
 // Georgia bounding box
-const GA_LAT_MIN = 30.36, GA_LAT_MAX = 35.00
-const GA_LNG_MIN = -85.61, GA_LNG_MAX = -80.84
-const SVG_W = 600, SVG_H = 640
+const GA_LAT_MIN = 30.356, GA_LAT_MAX = 35.001
+const GA_LNG_MIN = -85.606, GA_LNG_MAX = -80.840
 
-// Convert lat/lng to SVG x/y
+// Convert lat/lng to SVG x/y (matches the GA_PATH projection)
 function toSVG(lat, lng) {
-  const x = ((lng - GA_LNG_MIN) / (GA_LNG_MAX - GA_LNG_MIN)) * SVG_W
-  const y = ((GA_LAT_MAX - lat) / (GA_LAT_MAX - GA_LAT_MIN)) * SVG_H
+  const x = PAD + ((lng - GA_LNG_MIN) / (GA_LNG_MAX - GA_LNG_MIN)) * (SVG_W - 2*PAD)
+  const y = PAD + ((GA_LAT_MAX - lat) / (GA_LAT_MAX - GA_LAT_MIN)) * (SVG_H - 2*PAD)
   return { x, y }
 }
 
@@ -92,7 +91,12 @@ function getMarkerPos(r) {
 }
 
 // Simplified Georgia state outline path
-const GA_PATH = "M 529,35 L 535,42 L 539,55 L 541,72 L 542,92 L 541,115 L 539,140 L 536,167 L 531,195 L 525,222 L 517,248 L 507,272 L 495,293 L 481,312 L 465,328 L 447,341 L 427,350 L 405,356 L 382,358 L 358,356 L 335,350 L 313,340 L 293,327 L 275,310 L 259,291 L 246,268 L 235,244 L 227,218 L 221,191 L 218,163 L 217,135 L 218,107 L 221,81 L 226,57 L 232,38 L 96,38 L 88,42 L 82,52 L 77,66 L 74,83 L 72,103 L 72,125 L 74,150 L 78,175 L 84,202 L 93,229 L 104,255 L 117,280 L 133,303 L 151,323 L 171,341 L 193,356 L 217,368 L 242,377 L 268,382 L 295,384 L 322,382 L 348,376 L 372,367 L 394,354 L 414,338 L 431,320 L 446,299 L 458,276 L 468,252 L 475,226 L 480,199 L 482,172 L 482,144 L 480,117 L 476,91 L 469,67 L 461,47 L 529,35 Z"
+const GA_PATH = "M 20.0,20.0 L 86.1,20.0 L 162.5,20.0 L 228.0,20.0 L 293.4,20.0 L 292.5,22.1 L 270.9,34.5 L 288.2,58.6 L 315.5,84.1 L 317.5,109.7 L 304.0,135.3 L 303.9,173.3 L 352.4,201.2 L 392.3,225.4 L 427.7,253.9 L 449.0,285.3 L 489.4,320.1 L 511.6,365.5 L 514.4,384.4 L 504.9,414.7 L 512.0,435.4 L 492.6,458.8 L 480.0,495.2 L 453.8,519.6 L 408.4,520.8 L 395.5,553.8 L 389.7,573.2 L 270.3,573.2 L 267.5,579.4 L 234.5,584.3 L 195.2,594.8 L 147.2,599.3 L 122.0,580.8 L 101.3,573.5 L 86.0,557.0 L 76.1,541.1 L 66.3,534.6 L 77.8,520.5 L 72.8,509.2 L 78.7,487.5 L 71.9,465.1 L 81.8,442.3 L 81.8,416.1 L 86.0,394.3 L 78.4,368.7 L 75.2,343.3 L 66.2,321.4 L 66.2,298.7 L 70.0,274.1 L 62.3,255.1 L 44.3,230.4 L 31.6,202.4 L 34.9,174.7 L 38.4,153.7 L 44.2,132.8 L 46.2,110.0 L 46.2,86.4 L 34.5,72.2 L 31.5,54.1 L 31.6,38.6 L 20.0,20.0 Z"
+
+// SVG canvas matches the projection used above
+const SVG_W = 560
+const SVG_H = 620
+const PAD = 20
 
 export default function MapPage() {
   const [reports, setReports] = useState([])
@@ -281,4 +285,5 @@ export default function MapPage() {
     </Layout>
   )
 }
+
 
