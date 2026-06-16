@@ -92,7 +92,7 @@ export default function Submit() {
   }
 
   return (
-    <Layout><p style={{color:'lime'}}>URL: {process.env.NEXT_PUBLIC_SUPABASE_URL}</p>
+    <Layout>
       <div style={{ background: 'var(--black)', minHeight: '100vh' }}>
         <div style={{ maxWidth: 760, margin: '0 auto', padding: '60px 32px' }}>
 
