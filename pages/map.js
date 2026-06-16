@@ -172,7 +172,6 @@ export default function MapPage() {
                     />
                   )
                 })}
-              </div>
           </div>
 
           {/* Popup */}
@@ -238,3 +237,4 @@ export default function MapPage() {
     </Layout>
   )
 }
+
