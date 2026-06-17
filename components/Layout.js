@@ -21,7 +21,7 @@ export default function Layout({ children }) {
             color: 'var(--white)', textDecoration: 'none', textTransform: 'uppercase',
             letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: 8,
           }}>
-            <img src="/logo.png" alt="Georgia Animal Welfare Network" style={{ height: 40, width: 40, borderRadius: '50%' }} />
+            <img src="/LOGO.png" alt="Georgia Animal Welfare Network" style={{ height: 40, width: 40, borderRadius: '50%' }} />
 <span>Georgia <span style={{ color: 'var(--lime)' }}>Animal Welfare Network</span></span>
           </Link>
 
@@ -85,7 +85,7 @@ export default function Layout({ children }) {
                 fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 900,
                 textTransform: 'uppercase', color: 'var(--white)', marginBottom: 12,
               }}>
-                <img src="/logo.png" alt="Georgia Animal Welfare Network" style={{ height: 40, width: 40, borderRadius: '50%' }} />
+                <img src="/LOGO.png" alt="Georgia Animal Welfare Network" style={{ height: 40, width: 40, borderRadius: '50%' }} />
 <span>Georgia <span style={{ color: 'var(--lime)' }}>Animal Welfare Network</span></span>
               </h3>
               <p style={{ fontSize: 13, lineHeight: 1.7 }}>
