@@ -297,7 +297,7 @@ export default function Submit() {
                   Important Disclaimer
                 </p>
                 <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13, lineHeight: 1.7 }}>
-                  Reports published on Georgia Animal Welfare Watch are community-submitted observations and do not constitute proof of wrongdoing, unlawful activity, or violations of animal welfare laws. Published reports are intended solely for informational, educational, and research purposes.
+                  Reports published on Georgia Animal Welfare Network are community-submitted observations and do not constitute proof of wrongdoing, unlawful activity, or violations of animal welfare laws. Published reports are intended solely for informational, educational, and research purposes.
                 </p>
               </div>
 

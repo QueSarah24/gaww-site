@@ -30,7 +30,7 @@ export default function Home({ stats }) {
             fontSize: 18, color: 'rgba(255,255,255,0.75)',
             maxWidth: 560, marginBottom: 36, lineHeight: 1.6,
           }}>
-            Georgia Animal Welfare Watch is a public platform for reporting and tracking
+            Georgia Animal Welfare Network is a public platform for reporting and tracking
             animal sale activity. Together, we build the data needed to protect animals statewide.
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
@@ -76,7 +76,7 @@ export default function Home({ stats }) {
             <div>
               <div className="section-title">Our Mission</div>
               <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: 16, lineHeight: 1.75, marginTop: 16 }}>
-                Georgia Animal Welfare Watch helps communities document and better understand
+                Georgia Animal Welfare Network helps communities document and better understand
                 animal sale activity throughout Georgia. By collecting public observations,
                 we can identify trends, support animal welfare efforts, and promote responsible
                 treatment of animals.
