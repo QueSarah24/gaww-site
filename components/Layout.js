@@ -21,7 +21,7 @@ export default function Layout({ children }) {
             color: 'var(--white)', textDecoration: 'none', textTransform: 'uppercase',
             letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: 8,
           }}>
-            🐾 Georgia <span style={{ color: 'var(--lime)' }}>Animal Welfare Network</span>
+            <img src="/LOGO.png" alt="GAWN" style={{ height: 44, width: 44, borderRadius: '50%', marginRight: 8 }} />Georgia <span style={{ color: 'var(--lime)' }}>Animal Welfare Network</span>
           </Link>
 
           {/* Nav links */}
@@ -84,7 +84,7 @@ export default function Layout({ children }) {
                 fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 900,
                 textTransform: 'uppercase', color: 'var(--white)', marginBottom: 12,
               }}>
-                🐾 Georgia <span style={{ color: 'var(--lime)' }}>Animal Welfare Network</span>
+                <img src="/LOGO.png" alt="GAWN" style={{ height: 44, width: 44, borderRadius: '50%', marginRight: 8 }} />Georgia <span style={{ color: 'var(--lime)' }}>Animal Welfare Network</span>
               </h3>
               <p style={{ fontSize: 13, lineHeight: 1.7 }}>
                 A community-driven platform for documenting animal sale activity across Georgia. Anonymous reporting. Public transparency.
