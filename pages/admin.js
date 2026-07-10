@@ -113,9 +113,9 @@ export default function Admin() {
 
   const statusTag = (status) => {
     const styles = {
-      pending: { background: '#ffcc00', color: '#000' },
+      pending: { background: '#F71A59', color: '#000' },
       approved: { background: 'var(--lime)', color: '#000' },
-      rejected: { background: '#ff3333', color: '#fff' },
+      rejected: { background: '#F71A59', color: '#fff' },
       archived: { background: 'var(--gray-light)', color: 'rgba(255,255,255,0.6)' },
     }
     return (
@@ -135,7 +135,7 @@ export default function Admin() {
           <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 36, fontWeight: 900, textTransform: 'uppercase', color: 'var(--white)', marginBottom: 4 }}>Moderator Login</h1>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.45)', marginBottom: 32 }}>Access the GAWW moderation dashboard. Authorized personnel only.</p>
           {loginError && (
-            <div style={{ background: 'rgba(255,51,51,0.1)', border: '2px solid #ff3333', padding: '12px 16px', marginBottom: 20, color: '#ff9999', fontSize: 14 }}>{loginError}</div>
+            <div style={{ background: 'rgba(255,51,51,0.1)', border: '2px solid #F71A59', padding: '12px 16px', marginBottom: 20, color: '#ff9999', fontSize: 14 }}>{loginError}</div>
           )}
           <form onSubmit={handleLogin}>
             <div style={{ marginBottom: 16 }}>
@@ -304,7 +304,7 @@ export default function Admin() {
                     <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                       <button className="btn btn-primary btn-sm" onClick={() => updateStatus(selectedReport.id, 'approved')}>✓ Approve</button>
                       <button className="btn btn-sm" style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)' }} onClick={() => updateStatus(selectedReport.id, 'archived')}>Archive</button>
-                      <button className="btn btn-sm" style={{ background: '#ff3333', color: '#fff' }} onClick={() => updateStatus(selectedReport.id, 'rejected')}>✗ Reject</button>
+                      <button className="btn btn-sm" style={{ background: '#F71A59', color: '#fff' }} onClick={() => updateStatus(selectedReport.id, 'rejected')}>✗ Reject</button>
                       <button className="btn btn-sm btn-indigo" onClick={() => saveNote(selectedReport.id)}>Save Notes</button>
                     </div>
                   </div>

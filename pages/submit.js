@@ -145,7 +145,7 @@ export default function Submit() {
 
               {error && (
                 <div style={{
-                  background: 'rgba(255,51,51,0.1)', border: '2px solid #ff3333',
+                  background: 'rgba(255,51,51,0.1)', border: '2px solid #F71A59',
                   padding: '14px 18px', marginBottom: 20, color: '#ff9999', fontSize: 14,
                 }}>
                   Error: {error}
@@ -278,7 +278,7 @@ export default function Submit() {
                         <img src={src} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         <button onClick={() => removePhoto(i)} style={{
                           position: 'absolute', top: -6, right: -6, width: 18, height: 18,
-                          background: '#ff3333', border: 'none', color: '#fff',
+                          background: '#F71A59', border: 'none', color: '#fff',
                           fontSize: 11, cursor: 'pointer', borderRadius: '50%',
                           display: 'flex', alignItems: 'center', justifyContent: 'center',
                         }}>✕</button>
