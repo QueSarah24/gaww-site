@@ -16,7 +16,7 @@ export default function Donate() {
             fontFamily: 'var(--font-display)', fontSize: 'clamp(56px, 9vw, 110px)',
             fontWeight: 900, textTransform: 'uppercase', marginBottom: 14,
             lineHeight: 0.92, letterSpacing: '-0.01em', color: 'var(--white)',
-          }}>Help Support Georgia<br />Animal Welfare Watch</h1>
+          }}>Help Support Georgia<br />Animal Welfare Network</h1>
           <p style={{ fontSize: 17, opacity: 0.6, maxWidth: 540, lineHeight: 1.6 }}>
             Your support helps fund our reporting platform, interactive map, moderation efforts,
             and public education initiatives.
@@ -35,7 +35,7 @@ export default function Donate() {
             {/* Left: mission */}
             <div>
               <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 15, lineHeight: 1.8, marginBottom: 20 }}>
-                Georgia Animal Welfare Watch is a community-driven initiative dedicated to documenting
+                Georgia Animal Welfare Network is a community-driven initiative dedicated to documenting
                 animal sale activity, increasing transparency, and promoting animal welfare throughout
                 our state.
               </p>
@@ -47,7 +47,7 @@ export default function Donate() {
 
               <p style={{
                 fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 900,
-                textTransform: 'uppercase', color: 'var(--andromeda)',
+                textTransform: 'uppercase', color: 'var(--lime)',
                 letterSpacing: '0.04em', marginBottom: 16,
               }}>Your Donation Helps Fund:</p>
               <ul style={{ color: 'rgba(255,255,255,0.7)', fontSize: 15, lineHeight: 2, marginLeft: 20 }}>
@@ -73,7 +73,7 @@ export default function Donate() {
                   the humane treatment and responsible care of animals throughout Georgia.
                 </p>
                 <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 14, marginTop: 12, fontStyle: 'italic' }}>
-                  Thank you for supporting Georgia Animal Welfare Watch.
+                  Thank you for supporting Georgia Animal Welfare Network.
                 </p>
               </div>
             </div>
@@ -143,7 +143,7 @@ export default function Donate() {
                 fontSize: 12, color: 'rgba(255,255,255,0.3)', textAlign: 'center',
                 marginTop: 14, textTransform: 'uppercase', letterSpacing: '0.04em',
               }}>
-                Georgia Animal Welfare Watch is a community-driven initiative.
+                Georgia Animal Welfare Network is a community-driven initiative.
               </p>
             </div>
           </div>

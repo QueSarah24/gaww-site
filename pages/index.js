@@ -13,7 +13,7 @@ export default function Home({ stats }) {
         <div className="container">
           <span style={{
             fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 800,
-            textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--andromeda)',
+            textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--lime)',
             marginBottom: 20, display: 'block',
           }}>
             🐾 Community-Powered Documentation
@@ -24,13 +24,13 @@ export default function Home({ stats }) {
             textTransform: 'uppercase', marginBottom: 24, color: 'var(--white)',
           }}>
             Documenting Animal<br />
-            Sales Across <span style={{ color: 'var(--andromeda)' }}>Georgia</span>
+            Sales Across <span style={{ color: 'var(--lime)' }}>Georgia</span>
           </h1>
           <p style={{
-            fontSize: 18, color: 'rgba(255,255,255,0.75)',
+            fontSize: 18, color: 'rgba(255,243,231,0.75)',
             maxWidth: 560, marginBottom: 36, lineHeight: 1.6,
           }}>
-            Georgia Animal Welfare Watch is a public platform for reporting and tracking
+            Georgia Animal Welfare Network is a public platform for reporting and tracking
             animal sale activity. Together, we build the data needed to protect animals statewide.
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
@@ -54,11 +54,11 @@ export default function Home({ stats }) {
               }}>
                 <span style={{
                   fontFamily: 'var(--font-display)', fontSize: 52, fontWeight: 900,
-                  color: 'var(--andromeda)', display: 'block', lineHeight: 1,
+                  color: 'var(--lime)', display: 'block', lineHeight: 1,
                   letterSpacing: '-0.02em',
                 }}>{num.toLocaleString()}</span>
                 <div style={{
-                  fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.6)',
+                  fontSize: 13, fontWeight: 600, color: 'rgba(255,243,231,0.6)',
                   marginTop: 6, textTransform: 'uppercase', letterSpacing: '0.06em',
                 }}>{label}</div>
               </div>
@@ -75,8 +75,8 @@ export default function Home({ stats }) {
           }}>
             <div>
               <div className="section-title">Our Mission</div>
-              <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: 16, lineHeight: 1.75, marginTop: 16 }}>
-                Georgia Animal Welfare Watch helps communities document and better understand
+              <p style={{ color: 'rgba(255,243,231,0.65)', fontSize: 16, lineHeight: 1.75, marginTop: 16 }}>
+                Georgia Animal Welfare Network helps communities document and better understand
                 animal sale activity throughout Georgia. By collecting public observations,
                 we can identify trends, support animal welfare efforts, and promote responsible
                 treatment of animals.
@@ -94,7 +94,7 @@ export default function Home({ stats }) {
               ].map(({ icon, label }) => (
                 <div key={label} style={{
                   background: 'var(--black)', padding: '28px 24px',
-                  borderTop: '3px solid var(--indigo)',
+                  borderTop: '3px solid var(--andromeda)',
                 }}>
                   <div style={{ fontSize: 32, marginBottom: 12 }}>{icon}</div>
                   <div style={{
@@ -109,7 +109,7 @@ export default function Home({ stats }) {
       </section>
 
       {/* ── CTA ── */}
-      <section style={{ background: 'var(--andromeda)', padding: '60px 56px' }}>
+      <section style={{ background: 'var(--black)', padding: '60px 0', borderTop: '4px solid var(--andromeda)' }}>
         <div className="container" style={{
           display: 'flex', alignItems: 'center',
           justifyContent: 'space-between', gap: 32, flexWrap: 'wrap',
@@ -117,18 +117,16 @@ export default function Home({ stats }) {
           <div>
             <h2 style={{
               fontFamily: 'var(--font-display)', fontSize: 'clamp(36px, 5vw, 60px)',
-              fontWeight: 900, textTransform: 'uppercase', color: 'var(--black)',
+              fontWeight: 900, textTransform: 'uppercase', color: 'var(--white)',
               lineHeight: 0.95, marginBottom: 10,
-            }}>See something?<br />Report it.</h2>
-            <p style={{ color: 'rgba(0,0,0,0.65)', fontSize: 15, maxWidth: 480 }}>
+            }}>See something?<br /><span style={{ color: 'var(--andromeda)' }}>Report it.</span></h2>
+            <p style={{ color: 'rgba(255,243,231,0.65)', fontSize: 15, maxWidth: 480 }}>
               Anyone can submit an anonymous report. No account required.
               Your observation helps build a clearer picture of animal sale
               activity across Georgia.
             </p>
           </div>
-          <Link href="/submit" className="btn btn-lg" style={{
-            background: 'var(--black)', color: 'var(--andromeda)', flexShrink: 0,
-          }}>
+          <Link href="/submit" className="btn btn-primary btn-lg" style={{ flexShrink: 0 }}>
             Submit a Report →
           </Link>
         </div>

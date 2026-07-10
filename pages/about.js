@@ -16,7 +16,7 @@ export default function About() {
             fontSize: 17, color: 'rgba(255,255,255,0.55)',
             marginBottom: 40, lineHeight: 1.65,
           }}>
-            Georgia Animal Welfare Watch is a community-driven reporting platform dedicated to
+            Georgia Animal Welfare Network is a community-driven reporting platform dedicated to
             increasing transparency around animal sale activity across the State of Georgia.
           </p>
 
@@ -33,17 +33,17 @@ export default function About() {
 
           <h2 style={{
             fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 900,
-            textTransform: 'uppercase', color: 'var(--andromeda)', margin: '44px 0 14px',
+            textTransform: 'uppercase', color: 'var(--lime)', margin: '44px 0 14px',
           }}>Our Mission</h2>
           <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, marginBottom: 16 }}>
-            Georgia Animal Welfare Watch helps communities document and better understand animal
+            Georgia Animal Welfare Network helps communities document and better understand animal
             sale activity throughout Georgia. By collecting public observations, we can identify
             trends, support animal welfare efforts, and promote responsible treatment of animals.
           </p>
 
           <h2 style={{
             fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 900,
-            textTransform: 'uppercase', color: 'var(--andromeda)', margin: '44px 0 14px',
+            textTransform: 'uppercase', color: 'var(--lime)', margin: '44px 0 14px',
           }}>Reporting Guidelines</h2>
           <ul style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.9, marginLeft: 22, marginBottom: 16 }}>
             <li>Report only what you personally observed.</li>
@@ -55,7 +55,7 @@ export default function About() {
 
           <h2 style={{
             fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 900,
-            textTransform: 'uppercase', color: 'var(--andromeda)', margin: '44px 0 14px',
+            textTransform: 'uppercase', color: 'var(--lime)', margin: '44px 0 14px',
           }}>What Should Be Reported?</h2>
           <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, marginBottom: 8 }}>
             You may submit a report if you observe:
@@ -71,7 +71,7 @@ export default function About() {
 
           <h2 style={{
             fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 900,
-            textTransform: 'uppercase', color: 'var(--andromeda)', margin: '44px 0 14px',
+            textTransform: 'uppercase', color: 'var(--lime)', margin: '44px 0 14px',
           }}>Privacy and Data Use</h2>
           <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, marginBottom: 16 }}>
             We collect no identifying information about report submitters. Exact location data
@@ -84,17 +84,17 @@ export default function About() {
 
           <h2 style={{
             fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 900,
-            textTransform: 'uppercase', color: 'var(--andromeda)', margin: '44px 0 14px',
+            textTransform: 'uppercase', color: 'var(--lime)', margin: '44px 0 14px',
           }}>Disclaimer</h2>
           <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, marginBottom: 16 }}>
-            Georgia Animal Welfare Watch does not determine whether any individual, business,
+            Georgia Animal Welfare Network does not determine whether any individual, business,
             or organization has violated any law. Reports represent community-submitted observations
             and are published for informational and educational purposes only.
           </p>
 
           <h2 id="contact" style={{
             fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 900,
-            textTransform: 'uppercase', color: 'var(--andromeda)', margin: '44px 0 14px',
+            textTransform: 'uppercase', color: 'var(--lime)', margin: '44px 0 14px',
           }}>Contact Us</h2>
           <div style={{
             background: 'var(--black-soft)', borderTop: '3px solid var(--indigo)',

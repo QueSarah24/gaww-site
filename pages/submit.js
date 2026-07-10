@@ -1,319 +1,210 @@
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
-import Layout from '../components/Layout'
-import { supabase } from '../lib/supabase'
 
-export default function Submit() {
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const [files, setFiles] = useState([])
-  const [previews, setPreviews] = useState([])
+export default function Layout({ children }) {
+  const router = useRouter()
+  const [menuOpen, setMenuOpen] = useState(false)
 
-  const [form, setForm] = useState({
-    animal_type: '',
-    report_type: '',
-    date_observed: '',
-    city: '',
-    address: '',
-    description: '',
-  })
-
-  function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
-
-  function handlePhotos(e) {
-    const selected = Array.from(e.target.files).slice(0, 10)
-    setFiles(selected)
-    setPreviews(selected.map(f => URL.createObjectURL(f)))
-  }
-
-  function removePhoto(idx) {
-    const newFiles = files.filter((_, i) => i !== idx)
-    const newPreviews = previews.filter((_, i) => i !== idx)
-    setFiles(newFiles)
-    setPreviews(newPreviews)
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
-
-    try {
-      const { data: report, error: reportError } = await supabase
-        .from('reports')
-        .insert({
-          animal_type: form.animal_type,
-          report_type: form.report_type,
-          date_observed: form.date_observed,
-          city: form.city,
-          county: '',
-          address: form.address || null,
-          description: form.description,
-          status: 'pending',
-        })
-        .select()
-        .single()
-
-      if (reportError) throw reportError
-
-      for (const file of files) {
-        const ext = file.name.split('.').pop()
-        const path = `${report.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-        const { error: uploadError } = await supabase.storage
-          .from('report-photos')
-          .upload(path, file, { contentType: file.type })
-
-        if (!uploadError) {
-          await supabase.from('report_photos').insert({
-            report_id: report.id,
-            file_path: path,
-            file_name: file.name,
-            file_size: file.size,
-            is_public: false,
-          })
-        }
-      }
-
-      setSubmitted(true)
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  function resetForm() {
-    setSubmitted(false)
-    setForm({ animal_type: '', report_type: '', date_observed: '', city: '', address: '', description: '' })
-    setFiles([])
-    setPreviews([])
-  }
+  const navItems = [
+    { href: '/', label: 'Home' },
+    { href: '/map', label: 'Map' },
+    { href: '/reports', label: 'Reports' },
+    { href: '/about', label: 'About' },
+    { href: '/donate', label: 'Donate' },
+  ]
 
   return (
-    <Layout>
-      <div style={{ background: 'var(--black)', minHeight: '100vh' }}>
-        <div style={{ maxWidth: 760, margin: '0 auto', padding: '60px 32px' }}>
+    <>
+      {/* ── Navbar ── */}
+      <nav style={{
+        position: 'sticky', top: 0, zIndex: 100,
+        background: 'var(--indigo)', color: 'var(--white)',
+      }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          height: 64, maxWidth: 1120, margin: '0 auto', padding: '0 20px',
+        }}>
+          {/* Logo */}
+          <Link href="/" onClick={() => setMenuOpen(false)} style={{
+            fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 900,
+            color: 'var(--white)', textDecoration: 'none', textTransform: 'uppercase',
+            letterSpacing: '0.03em', display: 'flex', alignItems: 'center', gap: 8,
+            flexShrink: 0,
+          }}>
+            <img src="/LOGO.png" alt="Georgia Animal Welfare Network" style={{ height: 44, width: 44, borderRadius: '50%', flexShrink: 0 }} />
+            <span className="nav-title-text">Georgia <span style={{ color: 'var(--lime)' }}>Animal Welfare Network</span></span>
+          </Link>
 
-          <h1 style={{
-            fontFamily: 'var(--font-display)', fontSize: 'clamp(42px, 7vw, 70px)',
-            fontWeight: 900, textTransform: 'uppercase', color: 'var(--white)',
-            lineHeight: 0.95, marginBottom: 12, letterSpacing: '-0.01em',
-          }}>Submit a Report</h1>
-          <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 15, marginBottom: 48 }}>
-            All reports are anonymous. Your submission will be reviewed before appearing publicly.
-          </p>
-
-          {submitted ? (
-            <div style={{
-              background: 'var(--andromeda)', padding: 32, textAlign: 'center',
+          {/* Desktop nav links */}
+          <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            {navItems.map(({ href, label }) => (
+              <Link key={href} href={href} style={{
+                background: 'none', border: 'none',
+                color: router.pathname === href ? 'var(--lime)' : 'rgba(255,255,255,0.8)',
+                padding: '8px 12px', fontSize: 14, fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.04em',
+                fontFamily: 'var(--font-display)', textDecoration: 'none',
+              }}>
+                {label}
+              </Link>
+            ))}
+            <Link href="/submit" style={{
+              background: 'var(--lime)', color: 'var(--black)',
+              marginLeft: 6, padding: '8px 16px', fontSize: 13,
+              fontFamily: 'var(--font-display)', fontWeight: 800,
+              textTransform: 'uppercase', letterSpacing: '0.05em',
+              textDecoration: 'none', whiteSpace: 'nowrap',
             }}>
-              <div style={{ fontSize: 48, marginBottom: 12 }}>✅</div>
-              <h3 style={{
-                fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 900,
-                textTransform: 'uppercase', color: 'var(--black)', marginBottom: 8,
-              }}>Report Received — Thank You!</h3>
-              <p style={{ color: 'rgba(0,0,0,0.7)', fontSize: 14, marginBottom: 20 }}>
-                Your submission has been sent to our moderation queue. Approved reports typically appear within 48 hours. No identifying information was collected.
-              </p>
-              <button className="btn btn-lg" onClick={resetForm}
-                style={{ background: 'var(--black)', color: 'var(--andromeda)' }}>
-                Submit Another Report
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit}>
+              Submit Report
+            </Link>
+            <Link href="/admin" style={{
+              background: 'rgba(255,255,255,0.12)', color: 'var(--white)',
+              marginLeft: 6, padding: '8px 12px', fontSize: 13,
+              fontFamily: 'var(--font-display)', fontWeight: 800,
+              textTransform: 'uppercase', letterSpacing: '0.05em',
+              textDecoration: 'none', whiteSpace: 'nowrap',
+            }}>
+              Moderator
+            </Link>
+          </div>
 
-              {/* Guidelines */}
-              <div style={{
-                background: 'rgba(200,240,53,0.08)', borderLeft: '3px solid var(--lime)',
-                padding: '24px', marginBottom: 32,
-              }}>
-                <p style={{
-                  fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 900,
-                  textTransform: 'uppercase', color: 'var(--andromeda)', marginBottom: 16,
-                }}>Reporting Guidelines</p>
-                <ul style={{ color: 'rgba(255,255,255,0.7)', fontSize: 14, lineHeight: 1.9, marginLeft: 20 }}>
-                  <li>Report only what you personally observed.</li>
-                  <li>Be factual and objective.</li>
-                  <li>Describe actions and observations rather than assumptions.</li>
-                  <li>Upload screenshots/photos whenever possible.</li>
-                  <li>Respect the privacy of individuals.</li>
-                </ul>
-              </div>
-
-              {error && (
-                <div style={{
-                  background: 'rgba(255,51,51,0.1)', border: '2px solid #F71A59',
-                  padding: '14px 18px', marginBottom: 20, color: '#ff9999', fontSize: 14,
-                }}>
-                  Error: {error}
-                </div>
-              )}
-
-              {/* What did you observe */}
-              <div style={{ marginBottom: 36 }}>
-                <h2 style={{
-                  fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 800,
-                  color: 'var(--andromeda)', letterSpacing: '0.08em', textTransform: 'uppercase',
-                  marginBottom: 16, paddingBottom: 12,
-                  borderBottom: '2px solid rgba(255,255,255,0.1)',
-                }}>What did you observe?</h2>
-
-                <div className="form-row-2" style={{ marginBottom: 16 }}>
-                  <div className="form-group">
-                    <label className="form-label">Animal Type <span className="req">*</span></label>
-                    <select name="animal_type" value={form.animal_type} onChange={handleChange}
-                      className="form-select" required>
-                      <option value="">Select animal type</option>
-                      <option>Dog</option>
-                      <option>Cat</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Report Type <span className="req">*</span></label>
-                    <select name="report_type" value={form.report_type} onChange={handleChange}
-                      className="form-select" required>
-                      <option value="">Select report type</option>
-                      <option>Online Listing</option>
-                      <option>Public Sale</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="form-group" style={{ marginBottom: 16 }}>
-                  <label className="form-label">Date Observed <span className="req">*</span></label>
-                  <input type="date" name="date_observed" value={form.date_observed}
-                    onChange={handleChange} className="form-input" required />
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Description <span className="req">*</span></label>
-                  <textarea name="description" value={form.description} onChange={handleChange}
-                    className="form-textarea" required
-                    placeholder="Describe what you observed in as much detail as possible..." />
-                </div>
-              </div>
-
-              {/* Location */}
-              <div style={{ marginBottom: 36 }}>
-                <h2 style={{
-                  fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 800,
-                  color: 'var(--andromeda)', letterSpacing: '0.08em', textTransform: 'uppercase',
-                  marginBottom: 16, paddingBottom: 12,
-                  borderBottom: '2px solid rgba(255,255,255,0.1)',
-                }}>Location</h2>
-
-                <div className="form-group" style={{ marginBottom: 16 }}>
-  <label className="form-label">County <span className="req">*</span></label>
-  <select name="city" value={form.city} onChange={handleChange}
-    className="form-select" required>
-    <option value="">Select county</option>
-    <option>Appling</option><option>Atkinson</option><option>Bacon</option><option>Baker</option><option>Baldwin</option>
-    <option>Banks</option><option>Barrow</option><option>Bartow</option><option>Ben Hill</option><option>Berrien</option>
-    <option>Bibb</option><option>Bleckley</option><option>Brantley</option><option>Brooks</option><option>Bryan</option>
-    <option>Bulloch</option><option>Burke</option><option>Butts</option><option>Calhoun</option><option>Camden</option>
-    <option>Candler</option><option>Carroll</option><option>Catoosa</option><option>Charlton</option><option>Chatham</option>
-    <option>Chattahoochee</option><option>Chattooga</option><option>Cherokee</option><option>Clarke</option><option>Clay</option>
-    <option>Clayton</option><option>Clinch</option><option>Cobb</option><option>Coffee</option><option>Colquitt</option>
-    <option>Columbia</option><option>Cook</option><option>Coweta</option><option>Crawford</option><option>Crisp</option>
-    <option>Dade</option><option>Dawson</option><option>DeKalb</option><option>Decatur</option><option>Dodge</option>
-    <option>Dooly</option><option>Dougherty</option><option>Douglas</option><option>Early</option><option>Echols</option>
-    <option>Effingham</option><option>Elbert</option><option>Emanuel</option><option>Evans</option><option>Fannin</option>
-    <option>Fayette</option><option>Floyd</option><option>Forsyth</option><option>Franklin</option><option>Fulton</option>
-    <option>Gilmer</option><option>Glascock</option><option>Glynn</option><option>Gordon</option><option>Grady</option>
-    <option>Greene</option><option>Gwinnett</option><option>Habersham</option><option>Hall</option><option>Hancock</option>
-    <option>Haralson</option><option>Harris</option><option>Hart</option><option>Heard</option><option>Henry</option>
-    <option>Houston</option><option>Irwin</option><option>Jackson</option><option>Jasper</option><option>Jeff Davis</option>
-    <option>Jefferson</option><option>Jenkins</option><option>Johnson</option><option>Jones</option><option>Lamar</option>
-    <option>Lanier</option><option>Laurens</option><option>Lee</option><option>Liberty</option><option>Lincoln</option>
-    <option>Long</option><option>Lowndes</option><option>Lumpkin</option><option>Macon</option><option>Madison</option>
-    <option>Marion</option><option>McDuffie</option><option>McIntosh</option><option>Meriwether</option><option>Miller</option>
-    <option>Mitchell</option><option>Monroe</option><option>Montgomery</option><option>Morgan</option><option>Murray</option>
-    <option>Muscogee</option><option>Newton</option><option>Oconee</option><option>Oglethorpe</option><option>Paulding</option>
-    <option>Peach</option><option>Pickens</option><option>Pierce</option><option>Pike</option><option>Polk</option>
-    <option>Pulaski</option><option>Putnam</option><option>Quitman</option><option>Rabun</option><option>Randolph</option>
-    <option>Richmond</option><option>Rockdale</option><option>Schley</option><option>Screven</option><option>Seminole</option>
-    <option>Spalding</option><option>Stephens</option><option>Stewart</option><option>Sumter</option><option>Talbot</option>
-    <option>Taliaferro</option><option>Tattnall</option><option>Taylor</option><option>Telfair</option><option>Terrell</option>
-    <option>Thomas</option><option>Tift</option><option>Toombs</option><option>Towns</option><option>Treutlen</option>
-    <option>Troup</option><option>Turner</option><option>Twiggs</option><option>Union</option><option>Upson</option>
-    <option>Walker</option><option>Walton</option><option>Ware</option><option>Warren</option><option>Washington</option>
-    <option>Wayne</option><option>Webster</option><option>Wheeler</option><option>White</option><option>Whitfield</option>
-    <option>Wilcox</option><option>Wilkes</option><option>Wilkinson</option><option>Worth</option>
-  </select>
-</div>
-
-                <div className="form-group">
-                  <label className="form-label">Street Address or Landmark (optional — for moderators only)</label>
-                  <input type="text" name="address" value={form.address} onChange={handleChange}
-                    className="form-input" placeholder="e.g. Corner of Hwy 365 and Duncan Bridge Rd" />
-                </div>
-              </div>
-
-              {/* Photos */}
-              <div style={{ marginBottom: 36 }}>
-                <h2 style={{
-                  fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 800,
-                  color: 'var(--andromeda)', letterSpacing: '0.08em', textTransform: 'uppercase',
-                  marginBottom: 16, paddingBottom: 12,
-                  borderBottom: '2px solid rgba(255,255,255,0.1)',
-                }}>Photos</h2>
-
-                <div className="upload-zone" onClick={() => document.getElementById('photo-input').click()}>
-                  <div style={{ fontSize: 40, marginBottom: 8 }}>📷</div>
-                  <strong style={{ color: 'var(--white)' }}>Click to upload photos</strong>
-                  <p>JPG, PNG, HEIC up to 10MB each. Up to 10 photos.</p>
-                  <input type="file" id="photo-input" multiple accept="image/*"
-                    style={{ display: 'none' }} onChange={handlePhotos} />
-                </div>
-
-                {previews.length > 0 && (
-                  <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 12 }}>
-                    {previews.map((src, i) => (
-                      <div key={i} style={{ position: 'relative', width: 80, height: 80 }}>
-                        <img src={src} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        <button onClick={() => removePhoto(i)} style={{
-                          position: 'absolute', top: -6, right: -6, width: 18, height: 18,
-                          background: '#F71A59', border: 'none', color: '#fff',
-                          fontSize: 11, cursor: 'pointer', borderRadius: '50%',
-                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        }}>✕</button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Disclaimer */}
-              <div style={{
-                background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
-                padding: 16, marginBottom: 28,
-              }}>
-                <p style={{ fontSize: 12, fontWeight: 800, color: 'var(--andromeda)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
-                  Important Disclaimer
-                </p>
-                <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13, lineHeight: 1.7 }}>
-                  Reports published on Georgia Animal Welfare Watch are community-submitted observations and do not constitute proof of wrongdoing, unlawful activity, or violations of animal welfare laws. Published reports are intended solely for informational, educational, and research purposes.
-                </p>
-              </div>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                <button type="submit" className="btn btn-primary btn-lg" disabled={loading}>
-                  {loading ? 'Submitting...' : 'Submit Report Anonymously'}
-                </button>
-                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>
-                  No personal data is collected or stored with this submission.
-                </p>
-              </div>
-
-            </form>
-          )}
+          {/* Mobile hamburger */}
+          <button
+            className="hamburger-btn"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+            style={{
+              display: 'none', background: 'none', border: 'none',
+              color: 'var(--white)', fontSize: 26, cursor: 'pointer',
+              padding: 4, flexShrink: 0,
+            }}
+          >
+            {menuOpen ? '✕' : '☰'}
+          </button>
         </div>
-      </div>
-    </Layout>
+
+        {/* Mobile menu dropdown */}
+        {menuOpen && (
+          <div className="mobile-menu" style={{
+            background: 'var(--indigo-dark)',
+            borderTop: '1px solid rgba(255,255,255,0.1)',
+            display: 'flex', flexDirection: 'column', padding: '8px 0',
+          }}>
+            {navItems.map(({ href, label }) => (
+              <Link key={href} href={href} onClick={() => setMenuOpen(false)} style={{
+                padding: '14px 24px', fontSize: 15, fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.04em',
+                color: router.pathname === href ? 'var(--lime)' : 'rgba(255,255,255,0.85)',
+                fontFamily: 'var(--font-display)', textDecoration: 'none',
+                borderBottom: '1px solid rgba(255,255,255,0.06)',
+              }}>
+                {label}
+              </Link>
+            ))}
+            <Link href="/submit" onClick={() => setMenuOpen(false)} style={{
+              margin: '12px 24px 6px', padding: '12px 0', textAlign: 'center',
+              background: 'var(--lime)', color: 'var(--black)',
+              fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 14,
+              textTransform: 'uppercase', letterSpacing: '0.05em', textDecoration: 'none',
+            }}>
+              Submit Report
+            </Link>
+            <Link href="/admin" onClick={() => setMenuOpen(false)} style={{
+              margin: '0 24px 12px', padding: '12px 0', textAlign: 'center',
+              background: 'rgba(255,255,255,0.12)', color: 'var(--white)',
+              fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 14,
+              textTransform: 'uppercase', letterSpacing: '0.05em', textDecoration: 'none',
+            }}>
+              Moderator
+            </Link>
+          </div>
+        )}
+      </nav>
+
+      {/* ── Page content ── */}
+      <main>{children}</main>
+
+      {/* ── Footer ── */}
+      <footer style={{
+        background: 'var(--black)', color: 'rgba(255,255,255,0.5)',
+        padding: '48px 0 28px', borderTop: '3px solid var(--indigo)',
+      }}>
+        <div className="container">
+          <div className="footer-grid" style={{
+            display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr',
+            gap: 32, marginBottom: 36,
+          }}>
+            <div>
+              <h3 style={{
+                fontFamily: 'var(--font-display)', fontSize: 19, fontWeight: 900,
+                textTransform: 'uppercase', color: 'var(--white)', marginBottom: 12,
+                display: 'flex', alignItems: 'center', gap: 10,
+              }}>
+                <img src="/LOGO.png" alt="logo" style={{ height: 36, width: 36, borderRadius: '50%' }} />
+                Georgia <span style={{ color: 'var(--lime)' }}>Animal Welfare Network</span>
+              </h3>
+              <p style={{ fontSize: 13, lineHeight: 1.7 }}>
+                A community-driven platform for documenting animal sale activity across Georgia. Anonymous reporting. Public transparency.
+              </p>
+            </div>
+            <div>
+              <h4 style={{
+                fontFamily: 'var(--font-display)', fontSize: 12, fontWeight: 800,
+                letterSpacing: '0.1em', textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.25)', marginBottom: 14,
+              }}>Platform</h4>
+              {[['Submit a Report', '/submit'], ['View the Map', '/map'], ['Browse Reports', '/reports']].map(([label, href]) => (
+                <Link key={href} href={href} style={{ display: 'block', fontSize: 14, marginBottom: 10, color: 'rgba(255,255,255,0.5)' }}>{label}</Link>
+              ))}
+            </div>
+            <div>
+              <h4 style={{
+                fontFamily: 'var(--font-display)', fontSize: 12, fontWeight: 800,
+                letterSpacing: '0.1em', textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.25)', marginBottom: 14,
+              }}>Organization</h4>
+              {[['About Us', '/about'], ['Reporting Guidelines', '/about'], ['Disclaimer', '/about'], ['Contact', '/about#contact']].map(([label, href]) => (
+                <Link key={href} href={href} style={{ display: 'block', fontSize: 14, marginBottom: 10, color: 'rgba(255,255,255,0.5)' }}>{label}</Link>
+              ))}
+            </div>
+            <div>
+              <h4 style={{
+                fontFamily: 'var(--font-display)', fontSize: 12, fontWeight: 800,
+                letterSpacing: '0.1em', textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.25)', marginBottom: 14,
+              }}>Support</h4>
+              {[['Donate', '/donate'], ['Volunteer', '/about#contact'], ['Share the Platform', '/about']].map(([label, href]) => (
+                <Link key={href} href={href} style={{ display: 'block', fontSize: 14, marginBottom: 10, color: 'rgba(255,255,255,0.5)' }}>{label}</Link>
+              ))}
+            </div>
+          </div>
+          <div className="footer-bottom" style={{
+            borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 18,
+            display: 'flex', justifyContent: 'space-between', fontSize: 12,
+            textTransform: 'uppercase', letterSpacing: '0.05em', flexWrap: 'wrap', gap: 8,
+          }}>
+            <span>© {new Date().getFullYear()} Georgia Animal Welfare Network. All rights reserved.</span>
+            <span>Built for transparency. Powered by community.</span>
+          </div>
+        </div>
+      </footer>
+
+      {/* Mobile responsive styles */}
+      <style jsx global>{`
+        @media (max-width: 880px) {
+          .desktop-nav { display: none !important; }
+          .hamburger-btn { display: block !important; }
+          .nav-title-text { display: none; }
+        }
+        @media (max-width: 700px) {
+          .footer-grid { grid-template-columns: 1fr 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .footer-grid { grid-template-columns: 1fr !important; }
+          .footer-bottom { flex-direction: column; text-align: center; }
+        }
+      `}</style>
+    </>
   )
 }
