@@ -1,17 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600&display=swap');
 
 :root {
-  --indigo: #2a2aee;
-  --indigo-dark: #1a1ac0;
-  --indigo-deep: #111190;
-  --black: #0a0a0a;
-  --black-soft: #141414;
-  --lime: #c8f035;
-  --lime-dark: #a8d020;
-  --white: #ffffff;
-  --off-white: #f0f0f0;
-  --gray: #888888;
-  --gray-light: #333333;
+  --indigo: #1F448A;
+  --indigo-dark: #173670;
+  --indigo-deep: #0f2450;
+  --black: #4B3E88;
+  --black-soft: #3a2f6e;
+  --lime: #C1D82F;
+  --lime-dark: #a8c020;
+  --andromeda: #F71A59;
+  --andromeda-dark: #d4104a;
+  --eclipse: #FFC4E3;
+  --equinox: #008A55;
+  --orbit: #A793C6;
+  --cosmic: #4B3E88;
+  --orion: #FFF3E7;
+  --white: #FFF3E7;
+  --off-white: #FFF3E7;
+  --gray: #A793C6;
+  --gray-light: #2d2460;
   --border: rgba(255,255,255,0.15);
   --font-display: 'Barlow Condensed', Impact, sans-serif;
   --font-body: 'Barlow', system-ui, sans-serif;
@@ -137,4 +144,22 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   .form-row-2 { grid-template-columns: 1fr; }
   .container { padding: 0 16px; }
   .btn-lg { padding: 13px 24px; font-size: 16px; }
+}
+
+/* ── Mobile responsiveness ── */
+@media (max-width: 900px) {
+  .form-row-2 { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 16px; }
+  .btn-lg { padding: 12px 22px; font-size: 15px; }
+  .section { padding: 48px 0; }
+  table { font-size: 12px; }
+  th, td { padding: 8px 10px !important; }
+}
+
+@media (max-width: 600px) {
+  h1 { word-break: break-word; }
+  .action-btn { padding: 3px 7px; font-size: 10px; }
 }

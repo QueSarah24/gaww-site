@@ -134,8 +134,8 @@ export default function MapPage() {
   })
 
   function markerColor(r) {
-    if (r.report_type === 'Online Listing') return '#2a2aee'
-    if (r.report_type === 'Public Sale') return '#c8f035'
+    if (r.report_type === 'Online Listing') return '#1F448A'
+    if (r.report_type === 'Public Sale') return '#C1D82F'
     return 'rgba(255,255,255,0.8)'
   }
 
@@ -201,7 +201,7 @@ export default function MapPage() {
             <path
               d={GA_PATH}
               fill="#1a1a3a"
-              stroke="#2a2aee"
+              stroke="#1F448A"
               strokeWidth="1.5"
             />
 
@@ -270,8 +270,8 @@ export default function MapPage() {
           <div style={{ position: 'absolute', bottom: 16, left: 16, background: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.1)', padding: '12px 16px', zIndex: 6 }}>
             <div style={{ fontFamily: 'var(--font-display)', fontSize: 11, fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--lime)', marginBottom: 8 }}>Legend</div>
             {[
-              { color: '#c8f035', label: 'Public Sale' },
-              { color: '#2a2aee', label: 'Online Listing' },
+              { color: '#C1D82F', label: 'Public Sale' },
+              { color: '#1F448A', label: 'Online Listing' },
               { color: 'rgba(255,255,255,0.8)', label: 'Other' },
             ].map(({ color, label }) => (
               <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 5, fontSize: 12, color: 'rgba(255,255,255,0.65)' }}>
