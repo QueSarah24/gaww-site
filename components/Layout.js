@@ -21,7 +21,7 @@ export default function Layout({ children }) {
             color: 'var(--white)', textDecoration: 'none', textTransform: 'uppercase',
             letterSpacing: '0.04em', display: 'flex', alignItems: 'center', gap: 8,
           }}>
-            🐾 Georgia <span style={{ color: 'var(--lime)' }}>Animal Welfare Watch</span>
+            🐾 Georgia <span style={{ color: 'var(--lime)' }}>Animal Welfare Network</span>
           </Link>
 
           {/* Nav links */}
@@ -84,7 +84,7 @@ export default function Layout({ children }) {
                 fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 900,
                 textTransform: 'uppercase', color: 'var(--white)', marginBottom: 12,
               }}>
-                🐾 Georgia <span style={{ color: 'var(--lime)' }}>Animal Welfare Watch</span>
+                🐾 Georgia <span style={{ color: 'var(--lime)' }}>Animal Welfare Network</span>
               </h3>
               <p style={{ fontSize: 13, lineHeight: 1.7 }}>
                 A community-driven platform for documenting animal sale activity across Georgia. Anonymous reporting. Public transparency.
@@ -126,7 +126,7 @@ export default function Layout({ children }) {
             display: 'flex', justifyContent: 'space-between', fontSize: 12,
             textTransform: 'uppercase', letterSpacing: '0.05em',
           }}>
-            <span>© {new Date().getFullYear()} Georgia Animal Welfare Watch. All rights reserved.</span>
+            <span>© {new Date().getFullYear()} Georgia Animal Welfare Network. All rights reserved.</span>
             <span>Built for transparency. Powered by community.</span>
           </div>
         </div>
