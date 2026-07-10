@@ -13,7 +13,7 @@ export default function Home({ stats }) {
         <div className="container">
           <span style={{
             fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 800,
-            textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--lime)',
+            textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--andromeda)',
             marginBottom: 20, display: 'block',
           }}>
             🐾 Community-Powered Documentation
@@ -24,7 +24,7 @@ export default function Home({ stats }) {
             textTransform: 'uppercase', marginBottom: 24, color: 'var(--white)',
           }}>
             Documenting Animal<br />
-            Sales Across <span style={{ color: 'var(--lime)' }}>Georgia</span>
+            Sales Across <span style={{ color: 'var(--andromeda)' }}>Georgia</span>
           </h1>
           <p style={{
             fontSize: 18, color: 'rgba(255,255,255,0.75)',
@@ -54,7 +54,7 @@ export default function Home({ stats }) {
               }}>
                 <span style={{
                   fontFamily: 'var(--font-display)', fontSize: 52, fontWeight: 900,
-                  color: 'var(--lime)', display: 'block', lineHeight: 1,
+                  color: 'var(--andromeda)', display: 'block', lineHeight: 1,
                   letterSpacing: '-0.02em',
                 }}>{num.toLocaleString()}</span>
                 <div style={{
@@ -109,7 +109,7 @@ export default function Home({ stats }) {
       </section>
 
       {/* ── CTA ── */}
-      <section style={{ background: 'var(--lime)', padding: '60px 56px' }}>
+      <section style={{ background: 'var(--andromeda)', padding: '60px 56px' }}>
         <div className="container" style={{
           display: 'flex', alignItems: 'center',
           justifyContent: 'space-between', gap: 32, flexWrap: 'wrap',
@@ -127,7 +127,7 @@ export default function Home({ stats }) {
             </p>
           </div>
           <Link href="/submit" className="btn btn-lg" style={{
-            background: 'var(--black)', color: 'var(--lime)', flexShrink: 0,
+            background: 'var(--black)', color: 'var(--andromeda)', flexShrink: 0,
           }}>
             Submit a Report →
           </Link>

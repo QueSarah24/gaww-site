@@ -107,7 +107,7 @@ export default function Submit() {
 
           {submitted ? (
             <div style={{
-              background: 'var(--lime)', padding: 32, textAlign: 'center',
+              background: 'var(--andromeda)', padding: 32, textAlign: 'center',
             }}>
               <div style={{ fontSize: 48, marginBottom: 12 }}>✅</div>
               <h3 style={{
@@ -118,7 +118,7 @@ export default function Submit() {
                 Your submission has been sent to our moderation queue. Approved reports typically appear within 48 hours. No identifying information was collected.
               </p>
               <button className="btn btn-lg" onClick={resetForm}
-                style={{ background: 'var(--black)', color: 'var(--lime)' }}>
+                style={{ background: 'var(--black)', color: 'var(--andromeda)' }}>
                 Submit Another Report
               </button>
             </div>
@@ -132,7 +132,7 @@ export default function Submit() {
               }}>
                 <p style={{
                   fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 900,
-                  textTransform: 'uppercase', color: 'var(--lime)', marginBottom: 16,
+                  textTransform: 'uppercase', color: 'var(--andromeda)', marginBottom: 16,
                 }}>Reporting Guidelines</p>
                 <ul style={{ color: 'rgba(255,255,255,0.7)', fontSize: 14, lineHeight: 1.9, marginLeft: 20 }}>
                   <li>Report only what you personally observed.</li>
@@ -156,7 +156,7 @@ export default function Submit() {
               <div style={{ marginBottom: 36 }}>
                 <h2 style={{
                   fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 800,
-                  color: 'var(--lime)', letterSpacing: '0.08em', textTransform: 'uppercase',
+                  color: 'var(--andromeda)', letterSpacing: '0.08em', textTransform: 'uppercase',
                   marginBottom: 16, paddingBottom: 12,
                   borderBottom: '2px solid rgba(255,255,255,0.1)',
                 }}>What did you observe?</h2>
@@ -202,7 +202,7 @@ export default function Submit() {
               <div style={{ marginBottom: 36 }}>
                 <h2 style={{
                   fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 800,
-                  color: 'var(--lime)', letterSpacing: '0.08em', textTransform: 'uppercase',
+                  color: 'var(--andromeda)', letterSpacing: '0.08em', textTransform: 'uppercase',
                   marginBottom: 16, paddingBottom: 12,
                   borderBottom: '2px solid rgba(255,255,255,0.1)',
                 }}>Location</h2>
@@ -258,7 +258,7 @@ export default function Submit() {
               <div style={{ marginBottom: 36 }}>
                 <h2 style={{
                   fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 800,
-                  color: 'var(--lime)', letterSpacing: '0.08em', textTransform: 'uppercase',
+                  color: 'var(--andromeda)', letterSpacing: '0.08em', textTransform: 'uppercase',
                   marginBottom: 16, paddingBottom: 12,
                   borderBottom: '2px solid rgba(255,255,255,0.1)',
                 }}>Photos</h2>
@@ -293,7 +293,7 @@ export default function Submit() {
                 background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
                 padding: 16, marginBottom: 28,
               }}>
-                <p style={{ fontSize: 12, fontWeight: 800, color: 'var(--lime)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+                <p style={{ fontSize: 12, fontWeight: 800, color: 'var(--andromeda)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
                   Important Disclaimer
                 </p>
                 <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13, lineHeight: 1.7 }}>

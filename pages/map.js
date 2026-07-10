@@ -268,7 +268,7 @@ export default function MapPage() {
 
           {/* Legend */}
           <div style={{ position: 'absolute', bottom: 16, left: 16, background: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.1)', padding: '12px 16px', zIndex: 6 }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: 11, fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--lime)', marginBottom: 8 }}>Legend</div>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: 11, fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--andromeda)', marginBottom: 8 }}>Legend</div>
             {[
               { color: '#C1D82F', label: 'Public Sale' },
               { color: '#1F448A', label: 'Online Listing' },

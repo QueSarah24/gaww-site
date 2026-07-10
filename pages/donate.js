@@ -47,7 +47,7 @@ export default function Donate() {
 
               <p style={{
                 fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 900,
-                textTransform: 'uppercase', color: 'var(--lime)',
+                textTransform: 'uppercase', color: 'var(--andromeda)',
                 letterSpacing: '0.04em', marginBottom: 16,
               }}>Your Donation Helps Fund:</p>
               <ul style={{ color: 'rgba(255,255,255,0.7)', fontSize: 15, lineHeight: 2, marginLeft: 20 }}>

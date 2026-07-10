@@ -33,7 +33,7 @@ export default function About() {
 
           <h2 style={{
             fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 900,
-            textTransform: 'uppercase', color: 'var(--lime)', margin: '44px 0 14px',
+            textTransform: 'uppercase', color: 'var(--andromeda)', margin: '44px 0 14px',
           }}>Our Mission</h2>
           <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, marginBottom: 16 }}>
             Georgia Animal Welfare Watch helps communities document and better understand animal
@@ -43,7 +43,7 @@ export default function About() {
 
           <h2 style={{
             fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 900,
-            textTransform: 'uppercase', color: 'var(--lime)', margin: '44px 0 14px',
+            textTransform: 'uppercase', color: 'var(--andromeda)', margin: '44px 0 14px',
           }}>Reporting Guidelines</h2>
           <ul style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.9, marginLeft: 22, marginBottom: 16 }}>
             <li>Report only what you personally observed.</li>
@@ -55,7 +55,7 @@ export default function About() {
 
           <h2 style={{
             fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 900,
-            textTransform: 'uppercase', color: 'var(--lime)', margin: '44px 0 14px',
+            textTransform: 'uppercase', color: 'var(--andromeda)', margin: '44px 0 14px',
           }}>What Should Be Reported?</h2>
           <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, marginBottom: 8 }}>
             You may submit a report if you observe:
@@ -71,7 +71,7 @@ export default function About() {
 
           <h2 style={{
             fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 900,
-            textTransform: 'uppercase', color: 'var(--lime)', margin: '44px 0 14px',
+            textTransform: 'uppercase', color: 'var(--andromeda)', margin: '44px 0 14px',
           }}>Privacy and Data Use</h2>
           <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, marginBottom: 16 }}>
             We collect no identifying information about report submitters. Exact location data
@@ -84,7 +84,7 @@ export default function About() {
 
           <h2 style={{
             fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 900,
-            textTransform: 'uppercase', color: 'var(--lime)', margin: '44px 0 14px',
+            textTransform: 'uppercase', color: 'var(--andromeda)', margin: '44px 0 14px',
           }}>Disclaimer</h2>
           <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, marginBottom: 16 }}>
             Georgia Animal Welfare Watch does not determine whether any individual, business,
@@ -94,7 +94,7 @@ export default function About() {
 
           <h2 id="contact" style={{
             fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 900,
-            textTransform: 'uppercase', color: 'var(--lime)', margin: '44px 0 14px',
+            textTransform: 'uppercase', color: 'var(--andromeda)', margin: '44px 0 14px',
           }}>Contact Us</h2>
           <div style={{
             background: 'var(--black-soft)', borderTop: '3px solid var(--indigo)',

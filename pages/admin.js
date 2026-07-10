@@ -213,7 +213,7 @@ export default function Admin() {
                       )}
                       {reports.map(r => (
                         <tr key={r.id}>
-                          <td style={{ fontWeight: 700, color: 'var(--lime)' }}>#{r.id.slice(0, 8)}</td>
+                          <td style={{ fontWeight: 700, color: 'var(--andromeda)' }}>#{r.id.slice(0, 8)}</td>
                           <td>{formatDate(r.created_at)}</td>
                           <td>{r.city}</td>
                           <td>{r.animal_type}</td>
@@ -244,7 +244,7 @@ export default function Admin() {
                     {/* Details grid */}
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 20 }}>
                       <div>
-                        <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--lime)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 10 }}>Details</p>
+                        <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--andromeda)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 10 }}>Details</p>
                         <table style={{ fontSize: 13 }}>
                           <tbody>
                             {[
@@ -266,7 +266,7 @@ export default function Admin() {
                         </table>
                       </div>
                       <div>
-                        <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--lime)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 10 }}>Description</p>
+                        <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--andromeda)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 10 }}>Description</p>
                         <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', lineHeight: 1.7, background: 'rgba(255,255,255,0.04)', padding: 14, border: '1px solid rgba(255,255,255,0.08)' }}>
                           {selectedReport.description}
                         </p>
@@ -275,7 +275,7 @@ export default function Admin() {
 
                     {/* Photos */}
                     <div style={{ marginBottom: 20 }}>
-                      <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--lime)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 10 }}>
+                      <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--andromeda)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 10 }}>
                         Photos ({(selectedReport.report_photos || []).length})
                       </p>
                       <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
@@ -296,7 +296,7 @@ export default function Admin() {
 
                     {/* Moderator notes */}
                     <div style={{ marginBottom: 20 }}>
-                      <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--lime)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 8 }}>Moderator Notes</p>
+                      <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--andromeda)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: 8 }}>Moderator Notes</p>
                       <textarea value={modNote} onChange={e => setModNote(e.target.value)} className="form-textarea" style={{ minHeight: 80 }} placeholder="Add internal notes…" />
                     </div>
 
@@ -325,7 +325,7 @@ export default function Admin() {
                     )}
                     {allReports.map(r => (
                       <tr key={r.id}>
-                        <td style={{ fontWeight: 700, color: 'var(--lime)' }}>#{r.id.slice(0, 8)}</td>
+                        <td style={{ fontWeight: 700, color: 'var(--andromeda)' }}>#{r.id.slice(0, 8)}</td>
                         <td>{formatDate(r.created_at)}</td>
                         <td>{r.city}</td>
                         <td>{r.animal_type}</td>

@@ -42,8 +42,8 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer;
   border: none; transition: all 0.12s; text-decoration: none;
 }
-.btn-primary { background: var(--lime); color: var(--black); }
-.btn-primary:hover { background: var(--lime-dark); }
+.btn-primary { background: var(--andromeda); color: var(--white); }
+.btn-primary:hover { background: var(--andromeda-dark); }
 .btn-secondary { background: transparent; color: var(--white); border: 2px solid var(--white); }
 .btn-secondary:hover { background: var(--white); color: var(--black); }
 .btn-indigo { background: var(--indigo); color: var(--white); }
